@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>it's here.</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  
+  <style>
+    :root {
+      --primary-orange: rgba(255, 165, 0, 1.0);
+      --secondary-orange: rgba(255, 165, 0, 0.5);
+      --shadow-orange: rgba(255, 165, 0, 0.8);
+    }
+    /* Reset and basic styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Nunito', sans-serif !important; /* Universal override */
+
+    }
+    body, html {
+      width: 100%;
+      height: 100%;
+      background-color: #fff;
+      font-family: sans-serif;
+   
+    }
+
+    #toolbar {
+  position: fixed;
+  /* Move the toolbar away from the top and sides */
+  top: 1rem;
+  left: 1rem;
+  right: 1rem;
+
+  /* Keep the same height or adjust as you like */
+  height: 60px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 1000;
+
+  /* Rounded corners */
+  border-radius: 50px;
+
+  /* Extra padding inside the toolbar */
+  padding: 0.5rem 1rem;
+
+  /* Frosted glass background */
+  background-color: rgba(37, 37, 37, 0.9);
+  backdrop-filter: blur(8px);
+
+  /* Text color and transition */
+  color: #ffffff;
+  transition: background-color 0.3s ease, color 0.3s ease;
+
+  /* If you want a drop shadow: */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+
+  opacity: 0;
+
+}
+#toolbar.dark {
+  background-color: rgba(0, 0, 0, 0.3);
+  color: #fff;
+}
+
+    /* Container for the animation */
+    #animation-container {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+    }
+    /* Circle container centers the circle */
+    #circle-container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      /* Initially no extra translation (will be animated via GSAP) */
+      transform: translate(-50%, -50%);
+    }
+    /* The animated circle (represents the SF Symbol circle.fill) */
+    #circle {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 450px;
+      height: 450px;
+      background-color: var(--primary-orange);
+      border-radius: 50%;
+      z-index: 20;
+
+    }
+    /* Background circle behind the main circle */
+    #circle2 {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 500px;
+      height: 500px;
+      background-color: var(--secondary-orange);
+      border-radius: 50%;
+      box-shadow: 0 0 15px var(--shadow-orange);
+      z-index: 10;
+    }
+    /* The final icon that replaces the circle */
+    #icon-view {
+      position: relative;
+     
+      left: 50%;
+      width: 100px;
+      height: 100px;
+      transform: translate(-50%, -180%);
+      overflow: hidden;
+      border-radius: 25px;
+      opacity: 0; /* Hidden initially */
+      z-index: 3;
+    }
+    .icon-arrow {
+      position: absolute;
+      bottom: -8px;
+      left: -8px;
+      width: 85px;
+      height: 85px;
+      color: #333;
+     /* Set container height */
+  overflow: hidden;   /* Clip overflowing content */
+  border-radius: 20px; /* Adjust for desired roundness */
+    }
+    .icon-arrow svg {
+          position: absolute;
+  bottom: -30;
+  left: 0;
+    }
+    .icon-decor {
+      position: absolute;
+  
+      width: 100%;
+      height: 100%;
+      padding-left: -100%;
+      padding-bottom: -40px;
+      transform: rotate(170deg);
+      pointer-events: none;
+      z-index: -1;
+    }
+    .decor-circle-1 {
+      position: absolute;
+      top: 25%;
+      left: 80%;
+      width: 20px;
+      height: 20px;
+      background-color: rgba(255, 165, 0, 0.6);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+    }
+    .decor-circle-2 {
+      position: absolute;
+      top: 25%;
+      left: 80%;
+      width: 15px;
+      height: 15px;
+      background-color: orange;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+    }
+    /* The arrow element (using an inline SVG) */
+    #arrow {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      /* We'll animate the translation and rotation */
+      transform: translate(-50%, -50%);
+      z-index: 0;
+    }
+    /* Style for the inline SVG arrow */
+    #arrow svg {
+      width: 200px;
+      height: 200px;
+      filter: drop-shadow(0 0 10px black);
+    }
+    #text-container {
+  position: absolute;
+  top: 58%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  opacity: 0; /* Hidden initially, revealed by GSAP */
+  z-index: 5;
+  width: 80%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+#text-container h1 {
+  font-family: 'M PLUS Rounded 1c', sans-serif;
+  font-weight: 800;
+  font-size: clamp(1rem, 5vw, 2.5rem);
+  margin-bottom: 0px;
+}
+    #text-container p {
+        font-size: clamp(0.8rem, 2.7vw, 1.5rem);
+        font-weight: bold;
+
+        margin-bottom: 20px;
+      color: #666;
+    }
+  
+    #top-spacer {
+  height: 35vh;
+  width: 100%;
+}
+#text-container h1,
+#text-container p,
+#get-started {
+   
+
+  font-family: 'Nunito', sans-serif;
+  
+}
+#get-started {
+    display: inline-block;
+    width: 200px;
+    height: 55px;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 22px;
+    font-size: 1rem;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transition: all 0.5s ease-in-out;
+}
+
+#get-started.full-screen {
+    position: fixed;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    background-color: black;
+    color: white;
+    font-size: 2rem;
+    transition: all 0.3s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    border-radius: 0;
+}
+#get-started:hover {
+    opacity: 0.8;
+}
+#get-started.full-screen:hover {
+    opacity: 1;
+}
+
+    /* Next page section styling */
+    /* Add a small orange gradient in the top-right corner */
+    #next-page::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle at top right, rgba(255, 165, 0, 0.5) 0%, rgba(255, 165, 0, 0) 70%);
+      pointer-events: none;
+      z-index: 1;
+    }
+    #next-page {
+      position: relative;
+      width: 100%;
+      height: auto;
+      background-color: black;
+      margin: 20px auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #next-page2::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle at bottom left, rgb(80, 222, 232) 0%, rgba(255, 165, 0, 0) 70%);
+      pointer-events: none;
+      z-index: 1;
+    }
+    #next-page2 {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  background-color: black;
+  margin: 20px auto;
+  display: block;
+}
+
+@media (max-width: 768px) {
+  #next-page2 {
+    padding-bottom: 350px; /* Adjust as needed for mobile */
+  }
+}
+
+
+/* Frosted glass toolbar, horizontally spaced, vertically centered */
+
+
+/* Container for the logo, small square, also center the image inside */
+#toolbar-icon-view {
+  display: flex;
+  align-items: baseline;
+  justify-content: flex-start;
+  padding: 0 0rem;
+}
+
+#toolbar-logo {
+  width: 42px;
+  height: 42px;
+  object-fit: cover;
+  border-radius: 18%;
+  display: block;
+}
+
+/* Decor/circles if you want them in the toolbar too */
+#toolbar-icon-view .icon-decor {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+#toolbar-buttons {
+  display: flex;
+  align-items: center;
+  margin-right: 1rem;
+font-weight: bold;
+}
+
+.toolbar-btn {
+  background: none;
+  border: none;
+  color: #ffffff;
+  font-size: 1rem;
+  margin-left: 1rem;
+  cursor: pointer;
+  font-family: 'Nunito', sans-serif;
+  font-weight: bold;
+}
+
+.toolbar-btn:hover {
+  opacity: 0.7;
+}
+
+video {
+            border-radius: 60px;
+            overflow: hidden;
+            z-index: 30;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    
+        }
+        .dot {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;  /* so clicks pass through */
+    }
+  
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.1/gsap.min.js"></script>
+</head>
+<body>
+  <div id="toolbar">
+    <div id="toolbar-icon-view">
+      <!-- Small, rounded logo in the toolbar -->
+      <!-- <img id="toolbar-logo" src="logo.png" alt="Logo" style="margin-right: 0px;" /> -->
+      <span style="margin-left: 20px; font-size: 1.2rem; font-weight: bold; color: #ffffff; font-family: 'Nunito', sans-serif;">it's here.</span>
+    </div>
+    
+    <div id="toolbar-buttons">
+      <button class="toolbar-btn">Home</button>
+      <button class="toolbar-btn">Contact</button>
+      <button class="toolbar-btn">Pricing</button>
+      <button class="toolbar-btn">FAQs</button>
+
+
+    </div>
+
+
+  </div>
+    <!-- Animation Elements -->
+    <div id="animation-container">
+      <div id="circle-container">
+        <div id="circle2"></div>
+        <div id="circle"></div>
+        <div id="icon-view">
+          <div class="icon-arrow">
+
+              <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 254.395 254.59">
+                  <g>
+                   <rect height="54.59" opacity="0" width="54.395" x="0" y="0"/>
+                   <path d="M254.395 127.246C254.395 197.266 197.266 254.395 127.148 254.395C57.1289 254.395 0 197.266 0 127.246C0 57.1289 57.1289 0 127.148 0C197.266 0 254.395 57.1289 254.395 127.246ZM104.102 77.7344C98.9258 77.7344 95.5078 80.957 95.5078 85.8398C95.5078 90.7227 99.0234 94.043 104.297 94.043L132.422 94.043L151.27 92.3828L132.812 109.766L80.2734 162.207C78.6133 163.867 77.5391 166.016 77.5391 168.262C77.5391 173.34 80.7617 176.66 85.6445 176.66C88.4766 176.66 90.5273 175.684 92.1875 174.023L144.531 121.582L161.816 103.223L160.254 124.121L160.254 150C160.254 155.371 163.574 158.691 168.555 158.691C173.34 158.691 176.66 155.078 176.66 149.805L176.66 86.8164C176.66 80.3711 173.047 77.7344 167.48 77.7344Z" fill="black" fill-opacity="0.85"/>
+                  </g>
+                 </svg>
+     
+          </div>
+          <div class="icon-decor">
+            <div class="decor-circle-1"></div>
+            <div class="decor-circle-2"></div>
+          </div>
+        </div>
+      </div>
+      <div id="arrow">
+     
+
+          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" 
+          xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 189.062 236.816">
+       <g>
+         <rect height="236.816" opacity="0" width="189.062" x="0" y="0"/>
+         <path d="M94.5312 236.816C100.098 236.816 104.004 232.91 104.004 227.441L104.004 55.6641L102.93 20.2148L97.168 22.2656L138.477 67.0898L173.145 101.367C174.805 103.027 177.344 103.906 179.883 103.906C185.156 103.906 189.062 99.9023 189.062 94.5312C189.062 91.9922 188.184 89.8438 186.133 87.6953L101.66 3.22266C99.6094 1.07422 97.168 0 94.5312 0C91.8945 0 89.4531 1.07422 87.4023 3.22266L2.92969 87.6953C0.878906 89.8438 0 91.9922 0 94.5312C0 99.9023 3.90625 103.906 9.17969 103.906C11.7188 103.906 14.2578 103.027 15.918 101.367L50.5859 67.0898L91.7969 22.2656L86.1328 20.2148L85.0586 55.6641L85.0586 227.441C85.0586 232.91 88.9648 236.816 94.5312 236.816Z" 
+               fill="black" fill-opacity="1" 
+               stroke="black" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+       </g>
+     </svg>
+
+        
+      </div>
+
+
+
+      <svg 
+    id="dots-svg"
+    style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none;"
+  ></svg>
+
+
+
+    </div>
+    <div id="next-page" style="margin: 0 auto;">
+      <div class="container col-xxl-8 px-5 py-0">
+      <div class="row flex-lg-row-reverse align-items-top g-5 py-5">
+        <div class="rounded col-10 col-sm-8 col-lg-6">
+          <video width="350" height="300" autoplay muted loop playsinline>
+            <source src="v1.mp4" type="video/quicktime">
+            Your browser does not support the video tag.
+          </video>
+                </div>
+        <div class="col-lg-6">
+          <h1 class="text-white display-5 fw-bold lh-1 mb-3">Effortlessly uncover indoor items with immersive, step-by-step guidance.</h1>
+          <p class="text-white lead">Locating items indoors in unfamiliar spaces has never been simpler. Empower your customers to effortlessly discover what they need by harnessing this cutting-edge technology right at their fingertips. Through iCloud sharing, they can scan a QR code to explore the environment in augmented reality, all within a seamlessly intuitive interface.</p>
+          <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+            <button type="button" class="btn btn-light btn-lg px-4 me-md-2">Read More</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
+  </div>
+  <div id="particle-divider" style="position: relative; width: 100%; height: 70px; background: black; margin: 0 auto;">
+    <div id="particle-divider" style="position: relative; width: 80%; height: 70px; background: black; margin: 0 auto;">
+    <canvas id="particle-canvas" style="width: 100%; height: 100%;"></canvas>
+  </div>
+  </div>
+    <div>
+  <div id="next-page2" style="margin: 0 auto;">
+    <div class="container col-xxl-8 px-5 py-0">
+    <div class="row flex-lg-row-reverse align-items-top g-5 py-5">
+   
+      <div class="col-lg-6">
+        <h1 class="text-white display-5 fw-bold lh-1 mb-3">Seamlessly integrated with iOS with Spotlight Search, Shortcuts and Apple Intelligence</h1>
+        <p class="text-white lead">Discover and locate everything you need by harnessing the power of system-wide Spotlight search, Siri Shortcuts, and Apple Intelligence. Experience a new level of convenience and innovation that effortlessly puts what you’re looking for right at your fingertips.</p>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+          <button type="button" class="btn btn-light btn-lg px-4 me-md-2">Read More</button>
+        </div>
+      </div>
+
+      <div class="rounded col-10 col-sm-8 col-lg-6">
+
+
+  <div class="rounded col-10 col-sm-8 col-lg-6" style="position: relative; width: 550px;">
+    <img src="AI.png" style="position: absolute; top: -30; left: -30%; width: 330px; z-index: 1; border-radius: 50px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);" />
+    <video autoplay muted loop playsinline style="position: absolute; top: 0; left: 0; z-index: 1; width: 350px;">
+      <source src="v2.mp4" type="video/quicktime" />
+      Your browser does not support the video tag.
+    </video>
+  </div>
+</div>
+    </div>
+  </div>
+</div>
+    <!-- Text Content (hidden initially) -->
+    <div id="text-container">
+      <div class="mx-auto">
+        <h1 class="display-5 fw-bold text-body-emphasis">Welcome to it's here.</h1>
+        <p class="lead mb-4">Seamlessly discover anything indoors or out with state-of-the-art AR and LiDAR technology, wrapped in an elegantly intuitive interface and thoughtfully engineered to delight every step of the way.</p>
+        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+          <button id="continue-btn" type="button" class="btn btn-dark btn-lg px-4 gap-3">Read More</button>
+
+    <a href="https://apps.apple.com/us/app/imagine-tales/id6736946769?itscg=30200&itsct=apps_box_badge&mttnsubad=6736946769" style="display: inline-block;">
+      <img src="https://toolbox.marketingtools.apple.com/api/v2/badges/download-on-the-app-store/black/en-us?releaseDate=1733270400" alt="Download on the App Store" style="height: 55px; vertical-align: middle; object-fit: contain;" />
+      </a>
+      
+        </div>
+      </div>
+    </div>
+
+  <!-- Text Content (hidden initially) -->
+
+  <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+    <div class="col-md-4 d-flex align-items-center">
+      <a href="/" class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1">
+        <svg class="bi" width="30" height="24"><use xlink:href="#bootstrap"></use></svg>
+      </a>
+      <span class="mb-3 mb-md-0 text-body-secondary">© 2025 Parth Antala</span>
+    </div>
+
+    <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
+      <li class="ms-3"><a class="text-body-secondary" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#twitter"></use></svg></a></li>
+      <li class="ms-3"><a class="text-body-secondary" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#instagram"></use></svg></a></li>
+      <li class="ms-3"><a class="text-body-secondary" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#facebook"></use></svg></a></li>
+    </ul>
+  </footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.1/gsap.min.js"></script>
+  <script>
+  document.addEventListener("DOMContentLoaded", function() {
+    // Cache DOM elements
+    const circle = document.getElementById("circle");
+    const circle2 = document.getElementById("circle2");
+    const arrow = document.getElementById("arrow");
+    const iconView = document.getElementById("icon-view");
+    const textContainer = document.getElementById("text-container");
+    const welcomeText = document.getElementById("welcome-text");
+    const getStartedButton = document.getElementById("get-started");
+
+    // Initialize GSAP initial settings
+    function initGSAP() {
+      gsap.set(circle, { scale: 0.2, x: window.innerWidth/2, y: -window.innerHeight/2 });
+      gsap.set(circle2, { scale: 0.2, x: window.innerWidth/2, y: -window.innerHeight/2 });
+      gsap.set(arrow, { x: -window.innerWidth/2, y: window.innerHeight/2, rotation: 45 });
+      gsap.set("#icon-view .icon-decor", { rotation: 130, paddingLeft: "60px", paddingBottom: "60px" });
+    }
+
+    // Build and start the animation timeline
+    function startAnimation() {
+      const tl = gsap.timeline();
+      tl.timeScale(1);
+
+      // Step 1: Animate circles to full size and center
+      tl.to(circle, { duration: 1, scale: 1, x: 0, y: -180, ease: "power1.inOut" }, 0);
+      tl.to(circle2, { duration: 1, scale: 1.1, x: 0, y: -180, ease: "power1.inOut" }, 0);
+
+      // Step 2: Animate arrow moving into center and rotating
+      tl.to(arrow, { duration: 0.75, x: 0, y: 0, rotation: 0, ease: "power1.inOut" }, 0);
+
+      // Step 3: Fade out arrow
+      tl.to(arrow, { duration: 0.3, opacity: 0, ease: "power1.inOut" }, 0.5);
+
+      // Step 4: Shrink circles
+      tl.to(circle, { duration: 0.5, scale: 0.03, ease: "power1.in" }, 1);
+      tl.to(circle2, { duration: 0.5, scale: 0.033, ease: "power1.in" }, 1);
+
+      // Step 5: Bounce animation
+      let bounceTl = gsap.timeline({ timeScale: 3 });
+      bounceTl.to("#circle-container", { duration: 0.3, y: 70, ease: "power1.in" });
+      bounceTl.to("#circle-container", { duration: 0.2, y: 20, ease: "power1.out" });
+      bounceTl.to("#circle-container", { duration: 0.2, y: 60, ease: "power1.in" });
+      bounceTl.to("#circle-container", { duration: 0.2, y: 40, ease: "power1.out" });
+      bounceTl.to("#circle-container", { duration: 0.2, y: 50, ease: "power1.inOut" });
+      tl.add(bounceTl, 1.5);
+
+      // Step 6: Transition to icon view
+      tl.to(iconView, { duration: 1, opacity: 1, ease: "power1.out" }, 2.5);
+      tl.to(circle, { duration: 0.5, opacity: 0, ease: "power1.out" }, 2.5);
+      tl.to(circle2, { duration: 0.5, opacity: 0, ease: "power1.out" }, 2.5);
+
+      // Continuous breathing animation for circle2
+      tl.call(() => {
+        gsap.to(circle2, { duration: 1, scale: 0.04, ease: "power1.inOut", repeat: -1, yoyo: true });
+      }, null, 2.6);
+
+      // Icon view inner animations
+      tl.to("#icon-view .icon-decor", { duration: 1, rotation: 0, ease: "elastic.out(1, 0.3)" }, 3);
+      tl.to("#icon-view .icon-decor", { duration: 1, paddingLeft: "50px", paddingBottom: "50px", ease: "power1.out" }, 4);
+      tl.to("#icon-view .icon-decor", { duration: 0.5, paddingLeft: "60px", paddingBottom: "60px", ease: "power1.inOut" }, 4.2);
+      tl.to(".icon-arrow", { duration: 0.25, x: 3, y: -3, ease: "power1.inOut", yoyo: true, repeat: 1 }, 3.5);
+      tl.to(".icon-decor", { duration: 0.25, x: -12, y: 12, ease: "power1.inOut", yoyo: true, repeat: 1 }, 3.5);
+
+      // Step 7: Update welcome text
+      tl.call(() => {
+        welcomeText.innerText = "Welcome to it's here.";
+      }, null, 2.5);
+
+      // Step 8: Fade in text container
+      tl.to(textContainer, { duration: 1, opacity: 1, ease: "power1.inOut" }, 3.5);
+
+      // Step 9: Play sound effect
+      tl.call(() => {
+        const audio = new Audio("itshere.mp3");
+        audio.play();
+      }, null, 2);
+    }
+
+    // Initialize scroll effects for toolbar and element transformations
+    // function initScrollEffects() {
+    //   window.addEventListener('scroll', () => {
+    //     const threshold = 1; // adjust threshold as needed
+    //     if (window.scrollY > threshold) {
+    //       // Show toolbar
+    //       gsap.to("#toolbar", { duration: 0.5, opacity: 1, ease: "power1.inOut" });
+         
+    //     } else {
+    //       // Hide toolbar
+    //       gsap.to("#toolbar", { duration: 0.5, opacity: 0, ease: "power1.inOut" });
+        
+    //     }
+    //   });
+    // }
+  let lastDotPos = null;  // Global or outside the function scope
+
+  function spawnRandomDots() {
+  const container = document.getElementById("animation-container");
+  const linesSvg = document.getElementById("dots-svg");
+
+  // Wait 2 seconds before starting the dot+line creation
+  setTimeout(() => {
+    setInterval(() => {
+      // 1) Create a new dot
+      const dot = document.createElement("div");
+      dot.classList.add("dot");
+
+      // Random size between 0 and 8px
+      const size = Math.random() * 8;
+      // Random position within the container
+      const randomX = Math.random() * container.offsetWidth;
+      const randomY = Math.random() * container.offsetHeight;
+
+      // Style the dot
+      dot.style.width = size + "px";
+      dot.style.height = size + "px";
+      dot.style.left = randomX + "px";
+      dot.style.top = randomY + "px";
+      dot.style.backgroundColor = "rgba(0,0,0," + (Math.random() * 0.5 + 0.5) + ")";
+
+      container.appendChild(dot);
+
+      // 2) Compute dot center (for connecting lines)
+      const dotCenterX = randomX + size / 2;
+      const dotCenterY = randomY + size / 2;
+
+      // 3) Draw a line if we have a previous dot position
+      if (lastDotPos) {
+        const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        line.setAttribute("x1", lastDotPos.x);
+        line.setAttribute("y1", lastDotPos.y);
+        line.setAttribute("x2", dotCenterX);
+        line.setAttribute("y2", dotCenterY);
+        line.setAttribute("stroke", "rgba(128,128,128,0.5)"); // gray
+        line.setAttribute("stroke-width", "0.5");             // thin
+        line.style.opacity = 0;
+
+        linesSvg.appendChild(line);
+
+        // Fade line in, wait, fade out, remove
+        gsap.to(line, {
+          duration: 0.8,
+          opacity: 1,
+          onComplete: () => {
+            gsap.to(line, {
+              duration: 0.8,
+              opacity: 0,
+              delay: 2,
+              onComplete: () => line.remove()
+            });
+          }
+        });
+      }
+
+      // Update last dot position for next line
+      lastDotPos = { x: dotCenterX, y: dotCenterY };
+
+      // 4) Animate the dot itself
+      gsap.from(dot, {
+        duration: 0.8,
+        opacity: 0,
+        onComplete: () => {
+          gsap.to(dot, {
+            duration: 0.8,
+            opacity: 0,
+            delay: 2,
+            onComplete: () => dot.remove()
+          });
+        }
+      });
+    }, 50); // new dot every 50ms
+  }, 2000); // Delay 2 seconds before spawning dots/lines
+}
+
+const continueBtn = document.getElementById('continue-btn');
+  
+  // When the button is clicked, scroll to #next-page
+  continueBtn.addEventListener('click', function() {
+    const nextPage = document.getElementById('next-page');
+    nextPage.scrollIntoView({ behavior: 'smooth' });
+  });
+    // Initialize everything
+    initGSAP();
+    startAnimation();
+    spawnRandomDots();
+    initDecorFallObserver();
+   // initEventListeners();
+   // initScrollEffects();
+
+
+  });
+  </script>
+
+
+
+
+
+</script>
+
+<script>
+  (function() {
+    const canvas = document.getElementById('particle-canvas');
+    const ctx = canvas.getContext('2d');
+    
+    // Resize canvas to fill its container
+    function resizeCanvas() {
+      canvas.width = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    // Create particles
+    const particles = [];
+    const numParticles = 200;
+    for (let i = 0; i < numParticles; i++) {
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 2 + 1,
+        dx: (Math.random() - 0.5) * 0.5,
+        dy: (Math.random() - 0.5) * 0.5,
+      });
+    }
+
+    // Animate particles
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(p => {
+        // Move particle
+        p.x += p.dx;
+        p.y += p.dy;
+
+        // Bounce off edges
+        if (p.x < 0 || p.x > canvas.width) p.dx = -p.dx;
+        if (p.y < 0 || p.y > canvas.height) p.dy = -p.dy;
+
+        // Draw particle
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = 'white';
+        ctx.fill();
+      });
+      requestAnimationFrame(animate);
+    }
+    animate();
+  })();
+</script>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    // ... your existing code ...
+  
+    // Delay appearance of the toolbar
+    setTimeout(() => {
+      gsap.to("#toolbar", {
+        duration: 0.5,
+        opacity: 1,
+        ease: "power1.inOut"
+      });
+    }, 3500); // 2500ms = 2.5s
+  
+    // The rest of your existing code...
+  });
+  </script>
+</body>
+</html>
