@@ -348,7 +348,7 @@
       height: 800px;
       background: radial-gradient(circle at bottom left, rgb(80, 222, 232) 0%, rgba(255, 165, 0, 0) 70%);
       pointer-events: none;
-      z-index: 1;
+      z-index: 0;
     }
 
     #next-page2, #next-page5  {
@@ -368,7 +368,7 @@
       background: radial-gradient(circle at top left, rgb(80, 222, 232) 0%, rgba(255, 165, 0, 0) 70%);
 
       pointer-events: none;
-      z-index: 1;
+      z-index: 0;
     }
 
     #next-page3, #next-page4{
@@ -429,7 +429,7 @@
     video {
       border-radius: 60px;
       overflow: hidden;
-      z-index: 30;
+      z-index: 300 !important;
       box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 
     }
@@ -443,6 +443,7 @@
       position: absolute;
       border-radius: 50%;
       pointer-events: none;
+      z-index: 0;
       /* so clicks pass through */
     }
   
@@ -524,6 +525,37 @@
     transform: translate(-50%, 0) scale(1);
   }
 }
+#next-page2 img,
+#next-page2 video,
+#next-page3 img,
+#next-page3 video,
+#next-page4 img,
+#next-page4 video,
+#next-page5 img,
+#next-page5 video {
+  position: relative;
+  z-index: 9999 !important;  /* Something clearly above 0/1 */
+}
+
+.fade-in-section {
+  opacity: 0;              /* Start hidden */
+  transition: opacity 0.8s ease, transform 0.8s ease; 
+}
+
+.fade-in-section.is-visible {
+  opacity: 1;
+}
+
+#dots-svg-page2,
+#dots-svg-page3,
+#dots-svg-page4,
+#dots-svg-page5 {
+  position: absolute;
+  z-index: 0 !important; /* or 1 */
+  pointer-events: none;
+}
+
+
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.1/gsap.min.js"></script>
 </head>
@@ -600,7 +632,7 @@
 
   </div>
   <div id="next-page" style="margin: 0 auto;">
-    <div class="container col-xxl-8 px-5 py-0">
+    <div class="container col-xxl-8 px-5 py-0 fade-in-section" >
       <div class="row flex-lg-row-reverse align-items-top g-5 py-5">
         <div class="rounded col-10 col-sm-8 col-lg-6" style="z-index: 20;">
           <video width="350" height="300" autoplay muted loop playsinline>
@@ -623,7 +655,7 @@
     </div>
 
     <svg id="dots-svg-page1"
-    style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:0;">
+    style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none;">
 </svg>
   </div>
   <!-- <div id="particle-divider" style="position: relative; width: 100%; height: 70px; background: black; margin: 0 auto;">
@@ -633,7 +665,7 @@
   </div> -->
     <div id="next-page2" style="margin: 0 auto;">
       <div class="container col-xxl-8 px-5 py-0">
-        <div class="row flex-lg-row-reverse align-items-top g-5 py-0">
+        <div class="row flex-lg-row-reverse align-items-top g-5 py-0 fade-in-section">
 
           <div class="col-lg-6">
             <h1 class="text-white display-5 fw-bold lh-1 mb-3">Seamlessly integrated with iOS with Spotlight Search,
@@ -651,9 +683,9 @@
 
             <div class="rounded col-10 col-sm-8 col-lg-6" style="position: relative; margin-left: 90px; width: 100%;">
               <img src="AI.png"
-                style="position: absolute; top: -30; left: -30%; width: 330px; z-index: 1; border-radius: 50px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);" />
+                style="position: absolute; top: -30; left: -30%; width: 330px; z-index: 100 !important; border-radius: 50px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);" />
               <video autoplay muted loop playsinline
-                style="position: absolute; top: 0; left: 0; z-index: 1; width: 350px;">
+                style="position: absolute; top: 0; left: 0; z-index: 200 !important; width: 350px;">
                 <source src="v2.mp4" type="video/quicktime" />
                 Your browser does not support the video tag.
               </video>
@@ -666,7 +698,7 @@
 
 
       <svg id="dots-svg-page2"
-      style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:0;">
+      style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index: 1;">
   </svg>
     </div>
    
@@ -674,7 +706,7 @@
 
     <div id="next-page3" style="margin: 0 auto;">
       <div class="container col-xxl-8 px-5 py-0">
-        <div class="row align-items-top g-5 py-0">
+        <div class="row align-items-top g-5 py-0 fade-in-section">
 
           <div class="col-lg-6">
             <h1 class="text-white display-5 fw-bold lh-1 mb-3">it's Collaborative.</h1>
@@ -706,7 +738,7 @@
 
 
       <svg id="dots-svg-page3"
-      style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:0;">
+      style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index: 1;">
   </svg>
     </div>
 
@@ -714,7 +746,7 @@
 
     <div id="next-page4" style="margin: 0 auto;">
       <div class="container col-xxl-8 px-5 py-0">
-        <div class="row flex-lg-row-reverse align-items-top g-5 py-0">
+        <div class="row flex-lg-row-reverse align-items-top g-5 py-0 fade-in-section">
 
           <div class="col-lg-6">
             <h1 class="text-white display-5 fw-bold lh-1 mb-3">Effortlessly share copies of your saved AR maps with others using a custom file format.</h1>
@@ -744,14 +776,14 @@
 
 
       <svg id="dots-svg-page4"
-      style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:0;">
+      style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index: 1;">
   </svg>
     </div>
 
   </div>
   <div id="next-page5" style="margin: 0 auto;">
     <div class="container col-xxl-8 px-5 py-0">
-      <div class="row align-items-top g-5 py-0">
+      <div class="row align-items-top g-5 py-0 fade-in-section">
 
         <div class="col-lg-6">
           <h1 class="text-white display-5 fw-bold lh-1 mb-3">Elevate your digital experience; ffortlessly share sleek iCloud links with friends and family for personal use.</h1>
@@ -778,7 +810,7 @@
     </div>
 
     <svg id="dots-svg-page5"
-    style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:0;">
+    style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index: 1;">
 </svg>
 
   </div>
@@ -809,7 +841,7 @@
 
 
 
-    <div class="bg-gray-50 py-24 sm:py-32">
+    <div class="bg-gray-50 py-24 sm:py-32 fade-in-section">
       <div class="mx-auto max-w-2xl px-6 lg:max-w-7xl lg:px-8">
         <h2 class="text-center text-base/7 font-semibold text-indigo-600">it's Accessible.</h2>
         <p
@@ -920,7 +952,7 @@
 
 
   
-    <div class="bg-black" id="faqs">
+    <div class="bg-black fade-in-section" id="faqs">
       <div class="mx-auto max-w-7xl px-6 py-16 sm:py-24 lg:px-8">
         <div class="mx-auto max-w-2xl text-center">
           <h2 class="text-4xl font-semibold tracking-tight text-white sm:text-5xl">Frequently Asked Questions</h2>
@@ -1021,7 +1053,7 @@
 
 
     
-    <div class="container my-5">
+    <div class="container my-5 fade-in-section">
       <div class="row align-items-center">
         <div class="col-md-2 text-center position-relative">
           <img src="me.jpg" 
@@ -1058,7 +1090,7 @@
       </div>
     </div>
 
-    <div class="container py-5">
+    <div class="container py-5 fade-in-section">
       <h2>Let's Get in Touch</h2>
       <p class="lead">
         At it’s here., we believe every connection sparks innovation. Whether you’re curious about our cutting-edge AR experiences, have feedback to share, or dream of collaborating on future projects, we’re eager to hear from you. Reach out via email or connect with us on LinkedIn and join us on our journey to transform everyday spaces into immersive digital landscapes. Your insights and ideas are the heartbeat of our creative process—let’s craft something extraordinary together.</p>
@@ -1438,6 +1470,7 @@
     const container = document.getElementById(containerId);
     const linesSvg  = document.getElementById(svgId);
 
+    
     // Bail if elements don't exist
     if (!container || !linesSvg) return;
 
@@ -1486,7 +1519,7 @@
           line.setAttribute('stroke', 'rgba(255, 255, 255, 0.25)'); // semi-transparent white
           line.setAttribute('stroke-width', '1');
           line.style.opacity = 0;
-
+          
           linesSvg.appendChild(line);
 
           // Fade line in, wait, fade out, then remove
@@ -1533,6 +1566,36 @@
     spawnRandomDotsInSection('next-page5', 'dots-svg-page5',  500);
   });
 </script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const sections = document.querySelectorAll('.fade-in-section');
+
+    // Options for the Intersection Observer
+    const options = {
+      root: null,       // Use the viewport as the container
+      rootMargin: '0px',
+      threshold: 0.1    // Section becomes visible when 10% is in view
+    };
+
+    // Callback that adds the is-visible class when in view
+    const revealSection = (entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target); 
+          // Stop observing once it's visible (optional, but efficient)
+        }
+      });
+    };
+
+    // Create and attach the observer
+    const observer = new IntersectionObserver(revealSection, options);
+    sections.forEach(section => observer.observe(section));
+  });
+</script>
+
+
 </body>
 
 </html>
