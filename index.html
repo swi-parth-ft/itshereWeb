@@ -3,15 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta property="og:title" content="it's here.">
-  <meta property="og:description" content="Experience immersive AR experiences with 'it's here.'">
   <meta property="og:image" content="preview.png">
-  <meta property="og:type" content="website">
-  
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="it's here.">
-  <meta name="twitter:description" content="Experience immersive AR experiences with 'it's here.'">
-  <meta name="twitter:image" content="preview.png">
   <title>it's here.</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap"
@@ -534,22 +526,12 @@
     transform: translate(-50%, 0) scale(1);
   }
 }
-#next-page2 img,
-#next-page2 video,
-#next-page3 img,
-#next-page3 video,
-#next-page4 img,
-#next-page4 video,
-#next-page5 img,
-#next-page5 video {
-  position: relative;
-  z-index: 999 !important;  /* Something clearly above 0/1 */
-}
+
 
 .fade-in-section {
   opacity: 0;              /* Start hidden */
   transition: opacity 0.8s ease, transform 0.8s ease; 
-}   
+}
 
 .fade-in-section.is-visible {
   opacity: 1;
@@ -563,8 +545,6 @@
   z-index: 0 !important; /* or 1 */
   pointer-events: none;
 }
-
-
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.1/gsap.min.js"></script>
 </head>
