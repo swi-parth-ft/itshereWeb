@@ -33,6 +33,7 @@
       height: 100%;
       background-color: #fff;
       font-family: sans-serif;
+      scroll-behavior: smooth;
 
     }
 
@@ -433,6 +434,11 @@
 
     }
 
+    img {
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+
+    }
+
     .dot {
       position: absolute;
       border-radius: 50%;
@@ -484,7 +490,40 @@
       z-index: 0;
     }
 
- 
+    /* Add this to your <style> block or external CSS file */
+.bg-black {
+  position: relative; /* Ensure positioning context for the pseudo-element */
+}
+
+.bg-black::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  height: 1000px;
+  background: radial-gradient(
+    circle at top,
+    rgba(255, 166, 0, 0.336) 0%,
+    rgba(255, 165, 0, 0) 70%
+  );
+  pointer-events: none; /* Don’t block clicks */
+  z-index: 0;           /* Place it behind the FAQ content */
+}
+
+ /* Keyframe for a gentle float (jelly-like) */
+@keyframes jellyFloat {
+  0% {
+    transform: translate(-50%, 0) scale(1);
+  }
+  50% {
+    transform: translate(-50%, -20%) scale(1.05);
+  }
+  100% {
+    transform: translate(-50%, 0) scale(1);
+  }
+}
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.1/gsap.min.js"></script>
 </head>
@@ -500,10 +539,10 @@
     </div>
 
     <div id="toolbar-buttons">
-      <button class="toolbar-btn">Home</button>
-      <button class="toolbar-btn">Contact</button>
-      <button class="toolbar-btn">Pricing</button>
-      <button class="toolbar-btn">FAQs</button>
+      <button class="toolbar-btn" id="home-button">Home</button>
+      <button class="toolbar-btn" id="contact-button">Contact</button>
+      <button class="toolbar-btn" id="pricing-button">Pricing</button>
+      <button class="toolbar-btn" id="faq-button">FAQs</button>
 
 
     </div>
@@ -563,7 +602,7 @@
   <div id="next-page" style="margin: 0 auto;">
     <div class="container col-xxl-8 px-5 py-0">
       <div class="row flex-lg-row-reverse align-items-top g-5 py-5">
-        <div class="rounded col-10 col-sm-8 col-lg-6">
+        <div class="rounded col-10 col-sm-8 col-lg-6" style="z-index: 20;">
           <video width="350" height="300" autoplay muted loop playsinline>
             <source src="v1.mp4" type="video/quicktime">
             Your browser does not support the video tag.
@@ -583,7 +622,9 @@
       </div>
     </div>
 
-
+    <svg id="dots-svg-page1"
+    style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:0;">
+</svg>
   </div>
   <!-- <div id="particle-divider" style="position: relative; width: 100%; height: 70px; background: black; margin: 0 auto;">
     <div id="particle-divider" style="position: relative; width: 80%; height: 70px; background: black; margin: 0 auto;">
@@ -624,6 +665,9 @@
       </div>
 
 
+      <svg id="dots-svg-page2"
+      style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:0;">
+  </svg>
     </div>
    
 
@@ -661,6 +705,9 @@
       </div>
 
 
+      <svg id="dots-svg-page3"
+      style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:0;">
+  </svg>
     </div>
 
 
@@ -696,6 +743,9 @@
       </div>
 
 
+      <svg id="dots-svg-page4"
+      style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:0;">
+  </svg>
     </div>
 
   </div>
@@ -727,6 +777,9 @@
 
     </div>
 
+    <svg id="dots-svg-page5"
+    style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:0;">
+</svg>
 
   </div>
 
@@ -865,30 +918,180 @@
       </div>
     </div>
 
-    <!-- Text Content (hidden initially) -->
 
-    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+  
+    <div class="bg-black" id="faqs">
+      <div class="mx-auto max-w-7xl px-6 py-16 sm:py-24 lg:px-8">
+        <div class="mx-auto max-w-2xl text-center">
+          <h2 class="text-4xl font-semibold tracking-tight text-white sm:text-5xl">Frequently Asked Questions</h2>
+          <p class="mt-6 text-base/7 text-white">
+            Have a different question and can’t find the answer you’re looking for?
+            Reach out to our support team by
+            <a href="#" class="font-semibold hover:text-indigo-500">sending us an email</a>
+            and we’ll get back to you as soon as we can.
+          </p>
+        </div>
+        <div class="mt-20">
+          <dl class="space-y-16 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:space-y-0 sm:gap-y-16 lg:gap-x-10">
+    
+            <!-- FAQ #1 -->
+            <div>
+              <dt class="text-base/7 font-bold text-white">What exactly is it’s here.?</dt>
+              <dd class="mt-2 text-base/7 text-white">
+                <em>it’s here.</em> is an AR-powered platform that helps you effortlessly locate items in indoor spaces. It integrates seamlessly with iOS features like Spotlight Search and Siri Shortcuts, allowing you to quickly find and manage your AR maps right from your device.
+              </dd>
+            </div>
+    
+            <!-- FAQ #2 -->
+            <div>
+              <dt class="text-base/7 font-bold text-white">How do I create and save an AR map?</dt>
+              <dd class="mt-2 text-base/7 text-white">
+                Simply open <em>it’s here.</em> on your compatible iOS device, scan the space you want to map, and save the resulting <code>.worldmap</code> file. You can revisit this map later to navigate the same environment or share it with others.
+              </dd>
+            </div>
+    
+            <!-- FAQ #3 -->
+            <div>
+              <dt class="text-base/7 font-bold text-white">Can I share my AR maps with friends or colleagues?</dt>
+              <dd class="mt-2 text-base/7 text-white">
+                Absolutely! You can share a <code>.worldmap</code> file (just like any other file), or generate an iCloud link that lets others view and explore your map. You can also generate a QR code to make sharing quick and easy—just scan the code to access the map in AR.
+              </dd>
+            </div>
+    
+            <!-- FAQ #4 -->
+            <div>
+              <dt class="text-base/7 font-bold text-white">How do I collaborate on a shared map?</dt>
+              <dd class="mt-2 text-base/7 text-white">
+                When you share an iCloud link with authorized collaborators, they can add and tag new items directly in the map. As the owner, you can review and approve their contributions before making them visible to everyone.
+              </dd>
+            </div>
+    
+            <!-- FAQ #5 -->
+            <div>
+              <dt class="text-base/7 font-bold text-white">Do I need a specific iPhone or iPad model?</dt>
+              <dd class="mt-2 text-base/7 text-white">
+                For best results, <em>it’s here.</em> works on devices that support ARKit and LiDAR (like newer iPhone and iPad Pro models). However, basic functionality may still be available on older ARKit-compatible devices, just without the added precision LiDAR provides.
+              </dd>
+            </div>
+    
+            <!-- FAQ #6 -->
+            <div>
+              <dt class="text-base/7 font-bold text-white">How does the Tri-Sense design enhance accessibility?</dt>
+              <dd class="mt-2 text-base/7 text-white">
+                Tri-Sense design combines visual, audio, and haptic feedback to guide you to an item’s location. The app highlights your target visually, plays spatial audio cues if you’re using compatible headphones, and provides haptic feedback that intensifies as you get closer.
+              </dd>
+            </div>
+    
+            <!-- FAQ #7 -->
+            <div>
+              <dt class="text-base/7 font-bold text-white">Does it’s here. require an internet connection?</dt>
+              <dd class="mt-2 text-base/7 text-white">
+                You’ll need an internet connection to share or download iCloud links and <code>.worldmap</code> files. However, once a map is downloaded to your device, basic navigation can work offline, assuming your device’s AR capabilities are active.
+              </dd>
+            </div>
+    
+            <!-- FAQ #8 -->
+            <div>
+              <dt class="text-base/7 font-bold text-white">How do I ensure my data is secure?</dt>
+              <dd class="mt-2 text-base/7 text-white">
+                Your maps are saved to your personal iCloud account, which uses Apple’s robust encryption. Shared links can be set to view-only or collaborative. We recommend only sharing with people you trust and reviewing collaborator contributions regularly.
+              </dd>
+            </div>
+    
+            <!-- FAQ #9 -->
+            <div>
+              <dt class="text-base/7 font-bold text-white">Can I customize how items appear in AR?</dt>
+              <dd class="mt-2 text-base/7 text-white">
+                Yes! You can add custom labels or icons for your items. Depending on your device, you may also adjust the color or style of the markers to best suit your preferences or organizational needs.
+              </dd>
+            </div>
+    
+            <!-- FAQ #10 -->
+            <div>
+              <dt class="text-base/7 font-bold text-white">Is there a limit to how many maps I can create?</dt>
+              <dd class="mt-2 text-base/7 text-white">
+                There’s no hard limit on the number of maps you can create. The main constraint is your available iCloud storage (or local device storage if you export <code>.worldmap</code> files). You can always free up space by deleting old or unused maps.
+              </dd>
+            </div>
+    
+          </dl>
+        </div>
+      </div>
+    </div>
+
+
+    
+    <div class="container my-5">
+      <div class="row align-items-center">
+        <div class="col-md-2 text-center position-relative">
+          <img src="me.jpg" 
+               style="width: 150px; aspect-ratio: 1 / 1; object-fit: cover;" 
+               class="rounded-circle border border-secondary" 
+               alt="Developer Picture">
+               <a href="https://swi-parth-ft.github.io/Portfolio/index.html" target="_blank"
+               style="
+                 position: absolute; 
+                right: 0%; 
+                 bottom: 80%; 
+                 transform: translateX(-50%);
+                 display: inline-block;
+                 padding: 8px 14px;
+                 background-color: #007AFF;
+                 color: #fff;
+                 border-radius: 18px;
+                 font-size: 0.8rem;
+                 text-decoration: none;
+                 font-family: sans-serif;
+                 animation: jellyFloat 2s infinite ease-in-out;
+               "
+            >
+              Click Me
+          
+            </a>
+        </div>
+        <div class="col-md-9" id="contact">
+          <h2 class="mb-3">From Developer,</h2>
+          <p class="lead">
+            Hello, I'm Parth, the developer behind this experience. I poured my passion and creativity into crafting this platform to be both elegant and intuitive. Your feedback drives our innovation, so feel free to reach out with any ideas or questions. Let's build something extraordinary together!
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="container py-5">
+      <h2>Let's Get in Touch</h2>
+      <p class="lead">
+        At it’s here., we believe every connection sparks innovation. Whether you’re curious about our cutting-edge AR experiences, have feedback to share, or dream of collaborating on future projects, we’re eager to hear from you. Reach out via email or connect with us on LinkedIn and join us on our journey to transform everyday spaces into immersive digital landscapes. Your insights and ideas are the heartbeat of our creative process—let’s craft something extraordinary together.</p>
+      <div></div>
+      <div>
+          <p><a href="mailto:parthantala09@gmail.com" style="color: black;">Email Me </a><a
+                  href="https://www.linkedin.com/in/parthantala/?lipi=urn%3Ali%3Apage%3Ad_flagship3_search_srp_jobs%3ByC0%2BgUn%2BQd6KxalcRVDcXw%3D%3D" style="color: black;">
+                  | Connect on LinkedIn</a></p>
+      </div>
+  </div>
+    <!-- Text Content (hidden initially) -->
+    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top footer">
       <div class="col-md-4 d-flex align-items-center">
-        <a href="/" class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1">
-          <svg class="bi" width="30" height="24">
-            <use xlink:href="#bootstrap"></use>
-          </svg>
-        </a>
-        <span class="mb-3 mb-md-0 text-body-secondary">© 2025 Parth Antala</span>
+          <a href="/" class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1">
+              <svg class="bi" width="30" height="24">
+                  <use xlink:href="#bootstrap"></use>
+              </svg>
+          </a>
+          <span class="mb-3 mb-md-0 text-body-secondary">© Parth Antala</span>
       </div>
 
       <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
-        <li class="ms-3"><a class="text-body-secondary" href="#"><svg class="bi" width="24" height="24">
-              <use xlink:href="#twitter"></use>
-            </svg></a></li>
-        <li class="ms-3"><a class="text-body-secondary" href="#"><svg class="bi" width="24" height="24">
-              <use xlink:href="#instagram"></use>
-            </svg></a></li>
-        <li class="ms-3"><a class="text-body-secondary" href="#"><svg class="bi" width="24" height="24">
-              <use xlink:href="#facebook"></use>
-            </svg></a></li>
+          <li class="ms-3"><a class="text-body-secondary" href="#"><svg class="bi" width="24" height="24">
+                      <use xlink:href="#twitter"></use>
+                  </svg></a></li>
+          <li class="ms-3"><a class="text-body-secondary" href="#"><svg class="bi" width="24" height="24">
+                      <use xlink:href="#instagram"></use>
+                  </svg></a></li>
+          <li class="ms-3"><a class="text-body-secondary" href="#"><svg class="bi" width="24" height="24">
+                      <use xlink:href="#facebook"></use>
+                  </svg></a></li>
       </ul>
-    </footer>
+  </footer>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.1/gsap.min.js"></script>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
@@ -1205,8 +1408,131 @@
         }, 3500); // 2500ms = 2.5s
 
         // The rest of your existing code...
+
+        const faqButton = document.getElementById("faq-button");
+    faqButton.addEventListener("click", function() {
+      document.getElementById("faqs").scrollIntoView({ behavior: "smooth" });
+    });
+
+    const homeButton = document.getElementById("home-button");
+    homeButton.addEventListener("click", function() {
+      document.getElementById("animation-container").scrollIntoView({ behavior: "smooth" });
+    });
+
+    const contactButton = document.getElementById("contact-button");
+    contactButton.addEventListener("click", function() {
+      document.getElementById("contact").scrollIntoView({ behavior: "smooth" });
+    });
+
+
+
+
       });
+
+      
     </script>
+<script>
+  // Spawns white dots and lines in a given container + SVG
+  function spawnRandomDotsInSection(containerId, svgId, dotInterval = 500) {
+    // Grab the container and SVG
+    const container = document.getElementById(containerId);
+    const linesSvg  = document.getElementById(svgId);
+
+    // Bail if elements don't exist
+    if (!container || !linesSvg) return;
+
+    // Ensure container is relatively positioned
+    container.style.position = container.style.position || 'relative';
+
+    let lastDotPos = null;
+
+    // Start spawning dots after 2s
+    setTimeout(() => {
+      setInterval(() => {
+        // 1) Create a new dot
+        const dot = document.createElement('div');
+        dot.classList.add('dot');
+
+        // Random size between 2 and 10px
+        const size = Math.random() * 8 + 2;
+
+        // Random position within container
+        const randomX = Math.random() * container.offsetWidth;
+        const randomY = Math.random() * container.offsetHeight;
+
+        // Style the dot (white color)
+        dot.style.position = 'absolute';
+        dot.style.width = size + 'px';
+        dot.style.height = size + 'px';
+        dot.style.left = randomX + 'px';
+        dot.style.top = randomY + 'px';
+        dot.style.backgroundColor = 'rgba(255, 255, 255, 0.8)'; // white
+        dot.style.borderRadius = '50%';
+        dot.style.pointerEvents = 'none'; // allow clicks to pass through
+
+        container.appendChild(dot);
+
+        // 2) Compute dot center for lines
+        const dotCenterX = randomX + size / 2;
+        const dotCenterY = randomY + size / 2;
+
+        // 3) Draw a line to the previous dot if we have one
+        if (lastDotPos) {
+          const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+          line.setAttribute('x1', lastDotPos.x);
+          line.setAttribute('y1', lastDotPos.y);
+          line.setAttribute('x2', dotCenterX);
+          line.setAttribute('y2', dotCenterY);
+          line.setAttribute('stroke', 'rgba(255, 255, 255, 0.25)'); // semi-transparent white
+          line.setAttribute('stroke-width', '1');
+          line.style.opacity = 0;
+
+          linesSvg.appendChild(line);
+
+          // Fade line in, wait, fade out, then remove
+          gsap.to(line, {
+            duration: 0.8,
+            opacity: 1,
+            onComplete: () => {
+              gsap.to(line, {
+                duration: 0.8,
+                opacity: 0,
+                delay: 2,
+                onComplete: () => line.remove()
+              });
+            }
+          });
+        }
+
+        // Update last dot position for next line
+        lastDotPos = { x: dotCenterX, y: dotCenterY };
+
+        // 4) Animate the dot itself (fade in, wait, fade out)
+        gsap.from(dot, {
+          duration: 0.8,
+          opacity: 0,
+          onComplete: () => {
+            gsap.to(dot, {
+              duration: 0.8,
+              opacity: 0,
+              delay: 2,
+              onComplete: () => dot.remove()
+            });
+          }
+        });
+      }, dotInterval); // spawn new dot every 500ms by default
+    }, 2000);
+  }
+
+  // Call the function for each of your sections
+  document.addEventListener("DOMContentLoaded", function() {
+    spawnRandomDotsInSection('next-page',  'dots-svg-page1',  500);
+    spawnRandomDotsInSection('next-page2', 'dots-svg-page2',  500);
+    spawnRandomDotsInSection('next-page3', 'dots-svg-page3',  500);
+    spawnRandomDotsInSection('next-page4', 'dots-svg-page4',  500);
+    spawnRandomDotsInSection('next-page5', 'dots-svg-page5',  500);
+  });
+</script>
 </body>
 
 </html>
