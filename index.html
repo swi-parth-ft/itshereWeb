@@ -210,7 +210,7 @@
 
     #text-container {
       position: absolute;
-      top: 58%;
+      top: 60%;
       left: 50%;
       transform: translate(-50%, -50%);
       text-align: center;
@@ -305,11 +305,32 @@
       pointer-events: none;
       z-index: 1;
     }
+    #next-page5::before {
+      content: '';
+      position: absolute;
+      bottom: 20;
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle at top left, rgba(255, 247, 2, 0.35) 0%, rgba(255, 165, 0, 0) 30%);
 
+      pointer-events: none;
+      z-index: 1;
+    }
+    #next-page4::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle at top right, rgb(148, 128, 90) 0%, rgba(255, 165, 0, 0) 40%);
+      pointer-events: none;
+      z-index: 1;
+    }
     #next-page {
       position: relative;
       width: 100%;
-      height: auto;
+      height: 100%;
       background-color: black;
       margin: 20px auto;
       display: flex;
@@ -329,12 +350,12 @@
       z-index: 1;
     }
 
-    #next-page2 {
+    #next-page2, #next-page5  {
       position: relative;
       width: 100%;
-      min-height: 100%;
+      height: 100%;
       background-color: black;
-      display: block;
+      display: flex;
     }
 
     #next-page3::before {
@@ -344,23 +365,19 @@
       width: 800px;
       height: 800px;
       background: radial-gradient(circle at top left, rgb(80, 222, 232) 0%, rgba(255, 165, 0, 0) 70%);
+
       pointer-events: none;
       z-index: 1;
     }
 
-    #next-page3 {
+    #next-page3, #next-page4{
       position: relative;
       width: 100%;
-      min-height: 100%;
+      height: 100%;
       background-color: black;
       display: flex;
 
     }
-
-
-
-    /* Frosted glass toolbar, horizontally spaced, vertically centered */
-
 
     /* Container for the logo, small square, also center the image inside */
     #toolbar-icon-view {
@@ -423,6 +440,51 @@
       /* so clicks pass through */
     }
   
+  @media (max-width: 1268px) {
+    #next-page2, #next-page3, #next-page4, #next-page5 {
+      height: 80% !important;
+    }
+
+    }
+
+   
+     #next-page3::after{
+      content: '';
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle at bottom right, rgb(148, 128, 90) 0%, rgba(255, 165, 0, 0) 40%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    #next-page4::after{
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle at bottom left, rgba(255, 247, 2, 0.35) 0%, rgba(255, 165, 0, 0) 30%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    #next-page5::after{
+      content: '';
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle at bottom right, rgb(0, 120, 104) 0%, rgba(255, 165, 0, 0) 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+ 
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.1/gsap.min.js"></script>
 </head>
@@ -523,11 +585,11 @@
 
 
   </div>
-  <div id="particle-divider" style="position: relative; width: 100%; height: 70px; background: black; margin: 0 auto;">
+  <!-- <div id="particle-divider" style="position: relative; width: 100%; height: 70px; background: black; margin: 0 auto;">
     <div id="particle-divider" style="position: relative; width: 80%; height: 70px; background: black; margin: 0 auto;">
       <canvas id="particle-canvas" style="width: 100%; height: 100%;"></canvas>
     </div>
-  </div>
+  </div> -->
     <div id="next-page2" style="margin: 0 auto;">
       <div class="container col-xxl-8 px-5 py-0">
         <div class="row flex-lg-row-reverse align-items-top g-5 py-0">
@@ -546,7 +608,7 @@
           <div class="rounded col-10 col-sm-8 col-lg-6">
 
 
-            <div class="rounded col-10 col-sm-8 col-lg-6" style="position: relative; width: 550px;">
+            <div class="rounded col-10 col-sm-8 col-lg-6" style="position: relative; margin-left: 90px; width: 100%;">
               <img src="AI.png"
                 style="position: absolute; top: -30; left: -30%; width: 330px; z-index: 1; border-radius: 50px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);" />
               <video autoplay muted loop playsinline
@@ -603,6 +665,72 @@
 
 
 
+    <div id="next-page4" style="margin: 0 auto;">
+      <div class="container col-xxl-8 px-5 py-0">
+        <div class="row flex-lg-row-reverse align-items-top g-5 py-0">
+
+          <div class="col-lg-6">
+            <h1 class="text-white display-5 fw-bold lh-1 mb-3">Effortlessly share copies of your saved AR maps with others using a custom file format.</h1>
+            <p class="text-white lead">Effortlessly export your saved AR Map as a .worldmap file—just like any other file. Recipients can easily save, store, and integrate the file into their own system, allowing them to revisit, customize, and share your advanced AR experience. This seamless, sophisticated approach empowers users to transfer and enjoy rich, immersive maps without any hassle.</p>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+              <button type="button" class="btn btn-light btn-lg px-4 me-md-2">Read More</button>
+            </div>
+          </div>
+
+          <div class="rounded col-10 col-sm-8 col-lg-6">
+
+
+            <div class="rounded col-10 col-sm-8 col-lg-6" style="position: relative; margin-left: 90px; width: 100%;">
+              <img src="localShare.png"
+                style="position: absolute; top: -30; left: -30%; width: 330px; z-index: 1; border-radius: 50px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);" />
+              <video autoplay muted loop playsinline
+                style="position: absolute; top: 0; left: 0; z-index: 1; width: 350px;">
+                <source src="v5.mp4" type="video/quicktime" />
+                Your browser does not support the video tag.
+              </video>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+
+
+    </div>
+
+  </div>
+  <div id="next-page5" style="margin: 0 auto;">
+    <div class="container col-xxl-8 px-5 py-0">
+      <div class="row align-items-top g-5 py-0">
+
+        <div class="col-lg-6">
+          <h1 class="text-white display-5 fw-bold lh-1 mb-3">Elevate your digital experience; ffortlessly share sleek iCloud links with friends and family for personal use.</h1>
+          <p class="text-white lead">Share dynamic iCloud links for your immersive AR maps, allowing your friends and family to step into your world and explore your space as if it were their own. Every intricate detail is captured to provide a truly interactive experience, transforming your surroundings into a virtual playground of discovery and adventure. Elevate the way you share your world with this innovative approach, and let your loved ones embark on unforgettable explorations.</p>
+          <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+            <button type="button" class="btn btn-light btn-lg px-4 me-md-2">Read More</button>
+          </div>
+        </div>
+
+        <div class="rounded col-10 col-sm-8 col-lg-6">
+
+
+          <div class="rounded col-10 col-sm-8 col-lg-6" style="position: relative; width: 550px;">
+            <video autoplay muted loop playsinline
+              style="position: absolute; top: 0; left: 0; z-index: 1; width: 350px;">
+              <source src="v6.mp4" type="video/quicktime" />
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
 
     <!-- Text Content (hidden initially) -->
     <div id="text-container">
@@ -646,8 +774,7 @@
               </div>
               <div style="height: 600px;"
                 class="@container relative min-h-[30rem] w-full grow max-lg:mx-auto max-lg:max-w-sm">
-                <div style="background-color: white;"
-                  class="absolute inset-x-10 top-10 bottom-0 rounded-t-[12cqw] border-x-[3cqw] border-t-[3cqw] border-gray-700 bg-gray-900 shadow-2xl">
+                <div class="absolute inset-x-10 top-10 bottom-0 rounded-t-[12cqw] border-x-[3cqw] border-t-[3cqw]">
                   <img class="size-full object-cover object-top" style="height: 700px; border-radius: 50px;"
                     src="acc1.png" alt="">
 
@@ -702,8 +829,7 @@
               </div>
               <div style="height: 600px;"
                 class="@container relative min-h-[30rem] w-full grow max-lg:mx-auto max-lg:max-w-sm">
-                <div style="background-color: white;"
-                  class="absolute inset-x-10 top-10 bottom-0 rounded-t-[12cqw] border-x-[3cqw] border-t-[3cqw] border-gray-700 bg-gray-900 shadow-2xl">
+                <div class="absolute inset-x-10 top-10 bottom-0 rounded-t-[12cqw] border-x-[3cqw] border-t-[3cqw]">
                   <video autoplay muted loop playsinline style="height: 700px; border-radius: 50px;">
                     <source src="v3.mp4" type="video/quicktime" />
                     Your browser does not support the video tag.
