@@ -41,40 +41,24 @@
     }
 
     #toolbar {
-      position: fixed;
-      /* Move the toolbar away from the top and sides */
-      top: 1rem;
-      left: 1rem;
-      right: 1rem;
-
-      /* Keep the same height or adjust as you like */
-      height: 60px;
-
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      z-index: 1000;
-
-      /* Rounded corners */
-      border-radius: 50px;
-
-      /* Extra padding inside the toolbar */
-      padding: 0.5rem 1rem;
-
-      /* Frosted glass background */
-      background-color: rgba(37, 37, 37, 0.9);
-      backdrop-filter: blur(8px);
-
-      /* Text color and transition */
-      color: #ffffff;
-      transition: background-color 0.3s ease, color 0.3s ease;
-
-      /* If you want a drop shadow: */
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-
-      opacity: 0;
-
-    }
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  width: auto; /* Allows toolbar to shrink to its content */
+  height: 55px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  z-index: 1000;
+  border-radius: 50px;
+  padding: 0.5rem 1rem;
+  background-color: rgba(37, 37, 37, 0.9);
+  backdrop-filter: blur(8px);
+  color: #ffffff;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  opacity: 0;
+}
 
     #toolbar.dark {
       background-color: rgba(0, 0, 0, 0.3);
@@ -86,8 +70,10 @@
       position: relative;
       width: 100%;
       height: 100vh;
-      overflow: hidden;
+      overflow: visible;
     }
+
+  
 
     /* Circle container centers the circle */
     #circle-container {
@@ -134,17 +120,25 @@
       width: 100px;
       height: 100px;
       transform: translate(-50%, -180%);
-      overflow: hidden;
+      overflow: visible;
       border-radius: 25px;
       opacity: 0;
       /* Hidden initially */
       z-index: 30000;
     }
+    .icon-arrow-container {
+  position: relative;
+  top: 90;
+  width: 85px;
+  height: 85px;
+  overflow: hidden;
+  border-radius: 20px;
 
+}
     .icon-arrow {
       position: absolute;
-      bottom: -8px;
-      left: -8px;
+      bottom: -12px;
+      left: -12px;
       width: 85px;
       height: 85px;
       color: #333;
@@ -163,11 +157,11 @@
 
     .icon-decor {
       position: absolute;
-
+      bottom: 15%;
+      right: 5%;
       width: 100%;
       height: 100%;
-      padding-left: -100%;
-      padding-bottom: -40px;
+    
       transform: rotate(170deg);
       pointer-events: none;
       z-index: -1;
@@ -305,7 +299,6 @@
       left: 0;
       width: 800px;
       height: 800px;
-      background: radial-gradient(circle at top left, rgba(255, 165, 0, 0.5) 0%, rgba(255, 165, 0, 0) 70%);
       pointer-events: none;
       z-index: 1;
     }
@@ -337,6 +330,7 @@
       height: 100%;
       background-color: black;
       display: flex;
+
     }
 
     #next-page2::before {
@@ -504,6 +498,8 @@
       z-index: 0;
     }
 
+ 
+
     #next-page::after {
       content: '';
       position: absolute;
@@ -569,19 +565,21 @@
   z-index: 0 !important; /* or 1 */
   pointer-events: none;
 }
+
+
+  #next-page.orange-gradient::before {
+    left: 20%;
+    width: 80%;
+    background: radial-gradient(circle at 60% 0%, rgba(255, 165, 0, 0.5) 0%, rgba(255, 165, 0, 0) 70%);
+  }
+
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.1/gsap.min.js"></script>
 </head>
 
 <body>
   <div id="toolbar">
-    <div id="toolbar-icon-view">
-      <!-- Small, rounded logo in the toolbar -->
-      <!-- <img id="toolbar-logo" src="logo.png" alt="Logo" style="margin-right: 0px;" /> -->
-      <span
-        style="margin-left: 20px; font-size: 1.2rem; font-weight: bold; color: #ffffff; font-family: 'Nunito', sans-serif;">it's
-        here.</span>
-    </div>
+ 
 
     <div id="toolbar-buttons">
       <button class="toolbar-btn" id="home-button">Home</button>
@@ -600,7 +598,9 @@
       <div id="circle2"></div>
       <div id="circle"></div>
       <div id="icon-view">
-        <div class="icon-arrow">
+        <div class="icon-arrow-container">
+
+          <div class="icon-arrow">
 
           <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
             viewBox="0 0 254.395 254.59">
@@ -612,6 +612,7 @@
             </g>
           </svg>
 
+          </div>
         </div>
         <div class="icon-decor">
           <div class="decor-circle-1"></div>
@@ -1581,7 +1582,58 @@
     sections.forEach(section => observer.observe(section));
   });
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.1/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.1/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.1/MotionPathPlugin.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.1/ScrollTrigger.min.js"></script>
+<script>
+  gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
 
+ScrollTrigger.create({
+  trigger: "#animation-container",
+  start: "top top",
+  end: "bottom top",
+  toggleActions: "play reverse play reverse",
+  onEnter: () => {
+
+    gsap.to(".icon-arrow", { duration: 0.25, x: 13, y: -13, ease: "power1.inOut", yoyo: true, repeat: 1 });
+    gsap.to(".icon-decor", { duration: 0.25, x: -12, y: 12, ease: "power1.inOut", yoyo: true, repeat: 1 });
+
+    
+    gsap.to(".icon-decor", {
+      duration: 1.0,
+      motionPath: {
+        path: [
+          { x: 0, y: 0 },
+          { x: 50, y: -50 },
+          { x: 200, y: 300 },
+          { x: 225, y: 1000 }
+        ],
+        curviness: 1.5
+      },
+      ease: "power2.in",
+      onComplete: () => {
+        // When the ball reaches y:700, add the class that applies the gradient.
+        document.getElementById("next-page").classList.add("orange-gradient");
+      }
+    });
+
+    
+  },
+  onLeaveBack: () => {
+    gsap.to(".icon-decor", {
+      duration: 0.5,
+      x: 0,
+      y: 0,
+      ease: "power1.inOut",
+      onComplete: () => {
+        // When the ball reaches y:700, add the class that applies the gradient.
+        document.getElementById("next-page").classList.remove("orange-gradient");
+      }
+    });
+  }
+});
+</script>
 
 </body>
 
