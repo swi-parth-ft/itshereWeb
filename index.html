@@ -29,6 +29,7 @@
 
     }
 
+
     body,
     html {
       width: 100%;
@@ -301,10 +302,10 @@
       content: '';
       position: absolute;
       top: 0;
-      right: 0;
+      left: 0;
       width: 800px;
       height: 800px;
-      background: radial-gradient(circle at top right, rgba(255, 165, 0, 0.5) 0%, rgba(255, 165, 0, 0) 70%);
+      background: radial-gradient(circle at top left, rgba(255, 165, 0, 0.5) 0%, rgba(255, 165, 0, 0) 70%);
       pointer-events: none;
       z-index: 1;
     }
@@ -335,10 +336,7 @@
       width: 100%;
       height: 100%;
       background-color: black;
-      margin: 20px auto;
       display: flex;
-      align-items: center;
-      justify-content: center;
     }
 
     #next-page2::before {
@@ -352,6 +350,7 @@
       pointer-events: none;
       z-index: 0;
     }
+  
 
     #next-page2, #next-page5  {
       position: relative;
@@ -469,6 +468,18 @@
       z-index: 0;
     }
 
+    #next-page2::after{
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.379) 0%, rgba(255, 165, 0, 0) 30%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
     #next-page4::after{
       content: '';
       position: absolute;
@@ -489,6 +500,18 @@
       width: 800px;
       height: 800px;
       background: radial-gradient(circle at bottom right, rgb(0, 120, 104) 0%, rgba(255, 165, 0, 0) 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    #next-page::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle at bottom right, rgba(255, 255, 255, 0.379) 0%, rgba(255, 165, 0, 0) 30%);
       pointer-events: none;
       z-index: 0;
     }
@@ -819,18 +842,18 @@
 
 
 
-    <div class="bg-gray-50 py-24 sm:py-32 fade-in-section">
+    <div class="bg-gray-50 py-24 fade-in-section">
       <div class="mx-auto max-w-2xl px-6 lg:max-w-7xl lg:px-8">
         <h2 class="text-center text-base/7 font-semibold text-indigo-600">it's Accessible.</h2>
         <p
-          class="mx-auto mt-2 max-w-lg text-center text-4xl font-semibold tracking-tight text-balance text-gray-950 sm:text-5xl">
+          class="mt-2 w-lg text-center text-4xl font-semibold tracking-tight text-balance text-gray-950">
           We are using Tri-Sense design to guide user to the location!</p>
-        <div class="mt-10 grid gap-4 sm:mt-16 lg:grid-cols-3 lg:grid-rows-2">
+        <div class="mt-10 grid gap-4 lg:grid-cols-3 lg:grid-rows-2">
           <div class="relative lg:row-span-2">
             <div class="absolute inset-px rounded-lg bg-white lg:rounded-l-[2rem]"></div>
             <div
               class="relative flex h-full flex-col overflow-hidden rounded-[calc(var(--radius-lg)+1px)] lg:rounded-l-[calc(2rem+1px)]">
-              <div class="px-8 pt-8 pb-3 sm:px-10 sm:pt-10 sm:pb-0">
+              <div class="px-8 pt-8 pb-3">
                 <p class="mt-2 text-lg font-medium tracking-tight text-gray-950 max-lg:text-center">Accessibility</p>
                 <p class="mt-2 max-w-lg text-sm/6 text-gray-600 max-lg:text-center">it's designed with Accessibility at
                   core with giving user visual, sound and haptic feedbacks</p>
@@ -869,7 +892,7 @@
           <div class="relative max-lg:row-start-3 lg:col-start-2 lg:row-start-2">
             <div class="absolute inset-px rounded-lg bg-white"></div>
             <div class="relative flex h-full flex-col overflow-hidden rounded-[calc(var(--radius-lg)+1px)]">
-              <div class="px-8 pt-8 sm:px-10 sm:pt-10">
+              <div class="px-8 pt-8">
                 <p class="mt-2 text-lg font-medium tracking-tight text-gray-950 max-lg:text-center">Audio feedbacks</p>
                 <p class="mt-2 max-w-lg text-sm/6 text-gray-600 max-lg:text-center">While seaching for any item, it's
                   here plays a sound that comes from that item in spacial environment (in supported earphones), and
@@ -887,7 +910,7 @@
               class="relative flex h-full flex-col overflow-hidden rounded-[calc(var(--radius-lg)+1px)] max-lg:rounded-b-[calc(2rem+1px)] lg:rounded-r-[calc(2rem+1px)]">
               <div class="px-8 pt-8 pb-3 sm:px-10 sm:pt-10 sm:pb-0">
                 <p class="mt-2 text-lg font-medium tracking-tight text-gray-950 max-lg:text-center">Intuitive to Use</p>
-                <p class="mt-2 max-w-lg text-sm/6 text-gray-600 max-lg:text-center">All these features are right there
+                <p class="mt-2 max-w-lg text-gray-600 max-lg:text-center">All these features are right there
                   when user needs.</p>
               </div>
               <div style="height: 600px;"
