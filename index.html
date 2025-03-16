@@ -573,6 +573,23 @@
     background: radial-gradient(circle at 60% 0%, rgba(255, 165, 0, 0.5) 0%, rgba(255, 165, 0, 0) 50%);
   }
 
+  .loader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 6px solid #f3f3f3;
+    border-top-color: orange;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+    z-index: 300;
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.1/gsap.min.js"></script>
 </head>
@@ -651,6 +668,19 @@
         <div class="rounded col-10 col-sm-8 col-lg-6" style="z-index: 20;">
           <video width="350" height="300" autoplay muted loop playsinline>
             <source src="v1.mp4" type="video/quicktime">
+            <script>
+              const video = document.querySelector('video');
+              video.addEventListener('waiting', () => {
+                const loader = document.createElement('div');
+                loader.className = 'loader';
+                loader.setAttribute('role', 'status');
+                video.parentNode.appendChild(loader);
+              });
+
+              video.addEventListener('playing', () => {
+                document.querySelector('.loader').remove();
+              });
+            </script>
             Your browser does not support the video tag.
           </video>
         </div>
