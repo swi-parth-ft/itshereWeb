@@ -590,6 +590,29 @@
   @keyframes spin {
     to { transform: rotate(360deg); }
   }
+
+  .spinner{
+            position:absolute;
+            top:100px;
+            left:100px;
+            display:none;
+            border:8px solid rgba(0,0,0,.1);
+            border-left-color:red;
+            height:60px;
+            width:60px;
+            border-radius:50%;
+            z-index:999;
+            animation: rotate linear 2s infinite;
+            animation-delay: 0ms;
+        }
+        @keyframes rotate{
+            from{
+                transform: rotateZ(0deg);
+            }
+            to{
+                transform: rotateZ(360deg);
+            }
+        }
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.1/gsap.min.js"></script>
 </head>
@@ -668,22 +691,19 @@
         <div class="rounded col-10 col-sm-8 col-lg-6" style="z-index: 20;">
           <video width="350" height="300" autoplay muted loop playsinline>
             <source src="v1.mp4" type="video/quicktime">
-            <script>
-              const video = document.querySelector('video');
-              video.addEventListener('waiting', () => {
-                const loader = document.createElement('div');
-                loader.className = 'loader';
-                loader.setAttribute('role', 'status');
-                video.parentNode.appendChild(loader);
-              });
-
-              video.addEventListener('playing', () => {
-                document.querySelector('.loader').remove();
-              });
-            </script>
+      
             Your browser does not support the video tag.
           </video>
+          <div class="spinner" id="spinner"></div>
         </div>
+
+        <script>
+var video = document.getElementById("video");
+        video.onwaiting = function(){
+            document.getElementById("spinner").style.display="block"
+        }
+                </script>
+
         <div class="col-lg-6">
           <h1 class="text-white display-5 fw-bold lh-1 mb-3">Effortlessly uncover indoor items with immersive,
             step-by-step guidance.</h1>
